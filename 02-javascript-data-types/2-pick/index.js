@@ -5,5 +5,11 @@
  * @returns {object} - returns the new object
  */
 export const pick = (obj, ...fields) => {
-
+	if (typeof obj !== 'object' || obj === null) throw new Error('Передан неверный объект!');
+	
+	const fieldsSet = new Set(fields);
+	
+	return Object.fromEntries(
+	  Object.entries(obj).filter(([key]) => fieldsSet.has(key))
+	);
 };
