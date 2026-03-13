@@ -7,9 +7,9 @@
 export const pick = (obj, ...fields) => {
 	if (typeof obj !== 'object' || obj === null) throw new Error('Передан неверный объект!');
 	
-	const pickedObj = Object.fromEntries(
-	  Object.entries(obj).filter(([key]) => fields.includes(key))
-	);
+	const fieldsSet = new Set(fields);
 	
-	return pickedObj;
+	return Object.fromEntries(
+	  Object.entries(obj).filter(([key]) => fieldsSet.has(key))
+	);
 };

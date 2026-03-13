@@ -7,9 +7,9 @@
 export const omit = (obj, ...fields) => {
 	if (typeof obj !== 'object' || obj === null) throw new Error('Передан неверный объект!');
 	
-	const omitObj = Object.fromEntries(
-	  Object.entries(obj).filter(([key]) => !fields.includes(key))
-	);
+	const fieldsSet = new Set(fields);
 	
-	return omitObj;
+	return Object.fromEntries(
+	  Object.entries(obj).filter(([key]) => !fieldsSet.has(key))
+	);
 };
