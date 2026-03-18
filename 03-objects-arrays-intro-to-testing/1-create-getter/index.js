@@ -10,11 +10,14 @@ export function createGetter(path) {
 	
 	return (obj) => {
 		if (typeof obj !== 'object' || obj === null) throw new Error('Необходимо передать объект!');
+		let result = obj;
 		
-		return pathArray.reduce((accumObj, item) => {
-			if(accumObj === undefined) return undefined;
-			
-			return accumObj.hasOwnProperty(item)?accumObj[item]:undefined;
-		}, obj);
+		for (let pathItem of pathArray) {
+		   if(result === undefined || result === null) break;
+		   
+		   result = result.hasOwnProperty(pathItem)?result[pathItem]:undefined;
+		}
+		
+		return result;
 	} 
 }
