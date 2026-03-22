@@ -11,14 +11,16 @@ interface Options {
 export default class ColumnChart {
   public element: HTMLElement | null;
   readonly chartHeight = 50;
+  public bodyElement: HTMLDivElement | null;
 
   constructor(private options: Options = {}) {
     this.element = createElement(this.template);
+    this.bodyElement =  this.element.querySelector<HTMLDivElement>('[data-element=body]');
   }
 
   private get template() {
     const link =  this.options.link ? `<a href="${this.options.link}" class="column-chart__link">View all</a>` : '';
-    const valueFormat = this.options.value? this.options.formatHeading?.(this.options.value) ?? this.options.value : '';
+    const valueFormat = this.options.value !== undefined? this.options.formatHeading?.(this.options.value) ?? this.options.value : '';
     const dataDivs = this.renderData(this.options.data);
     const columnClass = !this.options.data || this.options.data.length === 0 ? 'column-chart_loading' : '';
 
@@ -40,24 +42,23 @@ export default class ColumnChart {
       if(!data || data.length === 0) return '';
 
       const maxValue = Math.max(...data);
-      const scale = this.chartHeight / maxValue;
+      const scale = maxValue ? this.chartHeight / maxValue : 0;
       return data.map(
         (item) => {
           const value = Math.floor(item * scale);
-          const tooltip = (item / maxValue * 100).toFixed(0) + '%';
-          return `<div style="--value: ${value}" data-tooltip="${tooltip}"></div>`
+          const tooltip = maxValue ? (item / maxValue * 100).toFixed(0)  : 0;
+          return `<div style="--value: ${value}" data-tooltip="${tooltip}%"></div>`
         }
       ).join('');
   }
 
   public update(data: number[]) {
       if(!this.element) return;
-
-      const el = this.element.querySelector<HTMLDivElement>('[data-element=body]');
-      if(!el) return;
+      if(!this.bodyElement) return;
 
       this.options.data = data;
-      el.innerHTML = this.renderData(data);
+      this.bodyElement.innerHTML = this.renderData(data);
+      this.element.classList.toggle("column-chart_loading", !data || data.length === 0);
   }
 
   public remove() {
