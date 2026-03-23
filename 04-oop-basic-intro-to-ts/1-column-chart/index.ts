@@ -41,7 +41,7 @@ export default class ColumnChart {
   private renderData(data: number[] | undefined){
       if(!data || data.length === 0) return '';
 
-      const maxValue = Math.max(...data);
+      const maxValue = Math.max(0, ...data);
       const scale = maxValue ? this.chartHeight / maxValue : 0;
       return data.map(
         (item) => {
