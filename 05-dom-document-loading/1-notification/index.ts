@@ -1,16 +1,19 @@
 import { createElement } from "../../shared/utils/create-element";
 
 interface Options {
-  duration: number;
-  type:'success' | 'error';
+  duration?: number;
+  type?:'success' | 'error';
 }
 
 export default class NotificationMessage {
   static activeNotification: NotificationMessage | null;
   public element: HTMLElement | null;
   private timerId: number = 0;
+  private options: Required<Options>;
 
-  constructor(private message: string, private options: Options = {'duration': 2000, type: 'success'}) {
+  constructor(private message: string, options: Options = {}) {
+    this.options = { duration: 2000, type: 'success', ...options };
+
     if (NotificationMessage.activeNotification) {
       NotificationMessage.activeNotification.remove();
     }
