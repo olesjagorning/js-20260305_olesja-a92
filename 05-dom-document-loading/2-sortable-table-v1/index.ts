@@ -84,7 +84,7 @@ export default class SortableTable {
         if(column['sortType'] === 'string') {
           return (rowA[field] as string).localeCompare((rowB[field] as string), ["ru", "en"], {caseFirst: "upper"}) * directions[order];
         } else if (column['sortType'] === 'number'){
-          return (rowA[field]-rowB[field]) * directions[order];
+          return ((rowA[field] as number) - (rowB[field] as number)) * directions[order];
         } else return 0;
       });
 
