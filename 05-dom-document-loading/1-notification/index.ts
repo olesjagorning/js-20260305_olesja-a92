@@ -6,7 +6,7 @@ interface Options {
 }
 
 export default class NotificationMessage {
-  static activeNotification: NotificationMessage | null;
+  static activeNotification: NotificationMessage | null = null;
   public element: HTMLElement | null;
   private timerId: number = 0;
   private options: Required<Options>;

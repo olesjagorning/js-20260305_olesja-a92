@@ -81,9 +81,9 @@ export default class SortableTable {
       this.data.sort((rowA,rowB) => {
         if(typeof rowA[field] === 'undefined' || typeof rowB[field]  === 'undefined') return 0;
 
-        if(typeof rowA[field] === 'string' && typeof rowB[field] === 'string') {
+        if(column['sortType'] === 'string') {
           return (rowA[field] as string).localeCompare((rowB[field] as string), ["ru", "en"], {caseFirst: "upper"}) * directions[order];
-        } else if (typeof rowA[field] === 'number' && typeof rowB[field] === 'number'){
+        } else if (column['sortType'] === 'number'){
           return (rowA[field]-rowB[field]) * directions[order];
         } else return 0;
       });
