@@ -25,7 +25,7 @@ export default class DoubleSlider {
   public max: number;
   public from: number;
   public to: number;
-  public shiftX: number;
+  public shiftX: number = 0;
 
   constructor(private options: Options = {}) {
     this.min = this.options.min??0;
