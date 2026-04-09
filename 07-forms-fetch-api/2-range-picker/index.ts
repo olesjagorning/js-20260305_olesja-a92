@@ -42,7 +42,7 @@ export default class RangePicker {
 
   private renderCalendar(date: Date){
     const lastDay = new Date(date.getFullYear(), date.getMonth()+1, 0).getDate();
-    const monthName = date.toLocaleString('default', { month: 'long' });
+    const monthName = date.toLocaleString('ru', { month: 'long' });
     let calendarHtml = `<div class="rangepicker__calendar">
                           <div class="rangepicker__month-indicator">
                             <time datetime="December">${monthName}</time>
